@@ -106,7 +106,7 @@ export const Contact = () => {
                   <div>
                     <p className="text-sm text-muted-foreground">Phone</p>
                     <p className="text-foreground font-medium">
-                      +91 93139 41992
+                      +91 9081002233
                     </p>
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder-muted-foreground focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
-                    placeholder="john@company.com"
+                    placeholder="info@triobytetechnology.in"
                   />
                 </div>
               </div>
@@ -249,3 +249,4 @@ export const Contact = () => {
     </section>
   );
 };
+

@@ -186,7 +186,7 @@ export const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder-muted-foreground focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
-                    placeholder="info@triobytetechnology.in"
+                    placeholder="xyz@contact.com"
                   />
                 </div>
               </div>
@@ -249,4 +249,5 @@ export const Contact = () => {
     </section>
   );
 };
+
 

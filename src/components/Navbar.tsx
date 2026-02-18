@@ -31,9 +31,11 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <a href="#home" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center font-bold text-background transition-transform duration-300 group-hover:scale-110">
-            TB
-          </div>
+          <img
+            src="/TrioBytelogo-cutout.png"
+            alt="TrioByte Logo"
+            className="w-10 h-10 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
+          />
           <span className="text-xl font-bold text-foreground">TrioByte</span>
         </a>
 

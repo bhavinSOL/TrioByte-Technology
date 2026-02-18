@@ -12,6 +12,8 @@ import {
   FileText,
   Briefcase,
   Link as LinkIcon,
+  Upload,
+  X,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
@@ -46,14 +48,58 @@ const InternApply = () => {
     coverLetter: "",
   });
 
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.split(",")[1]); // Remove data:...;base64, prefix
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+      if (!allowedTypes.includes(file.type)) {
+        alert("Please upload a PDF or Word document.");
+        return;
+      }
+      if (file.size > maxSize) {
+        alert("File size must be under 5MB.");
+        return;
+      }
+      setResumeFile(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      // Convert resume to base64 if provided
+      let resumeBase64 = "";
+      let resumeName = "";
+      let resumeType = "";
+      if (resumeFile) {
+        resumeBase64 = await fileToBase64(resumeFile);
+        resumeName = resumeFile.name;
+        resumeType = resumeFile.type;
+      }
+
       // Send data to Google Sheets
       const sheetPayload = {
         fullName: formData.fullName,
@@ -64,6 +110,9 @@ const InternApply = () => {
         graduationYear: formData.graduationYear,
         portfolio: formData.portfolio || "Not provided",
         coverLetter: formData.coverLetter,
+        resumeBase64,
+        resumeName,
+        resumeType,
       };
 
       const sheetPromise = fetch(GOOGLE_SHEET_URL, {
@@ -87,6 +136,7 @@ Phone: ${formData.phone}
 College / University: ${formData.college}
 Graduation Year: ${formData.graduationYear}
 Portfolio / LinkedIn: ${formData.portfolio || "Not provided"}
+Resume: ${resumeFile ? resumeFile.name : "Not uploaded"}
 
 Cover Letter:
 ${formData.coverLetter}
@@ -104,6 +154,7 @@ ${formData.coverLetter}
       ]);
 
       setIsSubmitted(true);
+      setResumeFile(null);
       setFormData({
         fullName: "",
         email: "",
@@ -306,6 +357,52 @@ ${formData.coverLetter}
                   placeholder="https://linkedin.com/in/yourprofile"
                   className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
                 />
+              </div>
+
+              {/* Resume Upload */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
+                  <Upload className="w-4 h-4 text-cyan-400" />
+                  Upload Resume (PDF / Word){" "}
+                  <span className="text-red-400">*</span>
+                </label>
+                <div className="relative">
+                  {resumeFile ? (
+                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/5">
+                      <FileText className="w-5 h-5 text-cyan-400 shrink-0" />
+                      <span className="text-sm text-foreground truncate flex-1">
+                        {resumeFile.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground shrink-0">
+                        {(resumeFile.size / 1024).toFixed(0)} KB
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setResumeFile(null)}
+                        className="text-muted-foreground hover:text-red-400 transition-colors shrink-0"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center gap-2 px-4 py-8 rounded-xl border-2 border-dashed border-white/10 bg-white/5 cursor-pointer hover:border-cyan-400/30 hover:bg-cyan-400/5 transition-all">
+                      <Upload className="w-8 h-8 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Click to upload or drag & drop
+                      </span>
+                      <span className="text-xs text-muted-foreground/60">
+                        PDF, DOC, DOCX — Max 5MB
+                      </span>
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        onChange={handleFileChange}
+                        className="hidden"
+                        required
+                      />
+                    </label>
+                  )}
+                </div>
               </div>
 
               {/* Cover Letter */}

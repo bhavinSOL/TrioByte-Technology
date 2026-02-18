@@ -12,6 +12,7 @@ const footerLinks = {
     { name: "Solutions", href: "#solutions" },
     { name: "Why Choose Us", href: "#why-us" },
     { name: "Contact", href: "#contact" },
+    { name: "Careers", href: "/careers" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy-policy" },

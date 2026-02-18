@@ -38,9 +38,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#home" className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center font-bold text-background">
-                TB
-              </div>
+              <img
+                src="/TrioBytelogo-cutout.png"
+                alt="TrioByte Logo"
+                className="w-10 h-10 rounded-lg object-cover"
+              />
               <span className="text-xl font-bold text-foreground">TrioByte</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm leading-relaxed">
@@ -96,7 +98,7 @@ export const Footer = () => {
           </div>
 
           {/* Legal links */}
-          <div>
+          {/* <div>
             <h4 className="text-foreground font-semibold mb-4">Legal</h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link, index) => (
@@ -110,7 +112,7 @@ export const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom bar */}

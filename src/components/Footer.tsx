@@ -23,7 +23,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/triobyte-technology/", label: "LinkedIn" },
   // { icon: Github, href: "#", label: "GitHub" },
 ];
 

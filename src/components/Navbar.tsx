@@ -31,7 +31,7 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2 group">
+        <a href="https://www.triobytetechnology.in/" className="flex items-center gap-2 group">
           <img
             src="/TrioBytelogo-cutout.png"
             alt="TrioByte Logo"
